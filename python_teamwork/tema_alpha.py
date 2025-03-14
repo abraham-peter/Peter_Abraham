@@ -1,48 +1,143 @@
-lista_cnp=[]
+#1980-2025
 import random
-
+import csv 
+lista_cnp=[]
+cnp_cu_nume_si_prenume={}
 def generare_cnp():
     global lista_cnp
-    Femeie=[6,2]
-    Barbati=[5,1]
-    ani=[i for i in range(1950,2026)]
-    zi=[k for k in range(1,32)]
-    luni={"Ianuarie":31,"Februarie":28,"Martie":31,"Aprilie":30,"Mai":31,"Iunie":30,"Iulie":31,"August":31,"Septembrie":30,"Octombrie":31,"Noiembrie":30,"Decembrie":31}
-    judete_cnp = {1: "Alba", 2: "Arad", 3: "Argeș", 4: "Bacău", 5: "Bihor", 6: "Bistrița-Năsăud", 7: "Botoșani",
-                  8: "Brașov", 9: "Brăila", 10: "Buzău", 11: "Caraș-Severin", 12: "Cluj", 13: "Constanța",
-                  14: "Covasna", 15: "Dâmbovița", 16: "Dolj", 17: "Galați", 18: "Gorj", 19: "Harghita", 20: "Hunedoara",
-                  21: "Ialomița", 22: "Iași", 23: "Ilfov", 24: "Maramureș", 25: "Mehedinți", 26: "Mureș", 27: "Neamț",
-                  28: "Olt", 29: "Prahova", 30: "Satu Mare", 31: "Sălaj", 32: "Sibiu", 33: "Suceava", 34: "Teleorman",
-                  35: "Timiș", 36: "Tulcea", 37: "Vaslui", 38: "Vâlcea", 39: "Vrancea", 40: "București",
-                  41: "Giurgiu"}
+    ani_inainte_de_2000=[ani_inainte for ani_inainte in range(1950,2000)]
+    ani_dupa_2000=[ani_dupa for ani_dupa in range(2001,2025)]
+    luna={1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}
+    judete_cnp=[judete for judete in range(1,42)]
+    nr_secvential=[sec for sec in range(0,1000)]
+    for cnp_barbati in range(250001):
+        cnp_barbati_generat_mai_mic_de_2000=0
+        cnp_barbati_generat_mai_mic_de_2000+=1
+        cnp_barbati_generat_mai_mic_de_2000*=100+random.choice(ani_inainte_de_2000)
+        luna_aleasa=random.choice(list(luna.keys()))
+        cnp_barbati_generat_mai_mic_de_2000*=100+random.choice(luna[luna_aleasa])
+        cnp_barbati_generat_mai_mic_de_2000*=100+luna[luna_aleasa]
+        cnp_barbati_generat_mai_mic_de_2000*=100+random.choice(judete_cnp)
+        cnp_barbati_generat_mai_mic_de_2000*=1000+random.choice(nr_secvential)
+        def calculeaza_cifra_control(cnp_barbati_generat_mai_mic_de_2000):
+            constanta = "279146358279"
+            suma = 0
+            cnp_str = str(cnp_barbati_generat_mai_mic_de_2000)
+            for i in range(12):
+                suma += int(cnp_str[i]) * int(constanta[i])
+            
+            rest = suma % 11
+            cifra_control = 1 if rest == 10 else rest
+            
+            return cifra_control
 
-    numar_secvential=[i for i in range(0,1000)]
-    for i in range(0,500001): # Barbati
-        sex=random.choice(Barbati)
-        an=random.randint(1950,1999) % 100
-        luna=random.randint(1,12)
-        key = random.randint(0, 11)
-        ziua=luni[key]
-        key2 = random.randint(0,41)
-        judet=judete_cnp[key2]
-        for j in range(0,101):
-            x=j
-            j=100
+        
+        cifra_control = calculeaza_cifra_control( cnp_barbati_generat_mai_mic_de_2000 )
+        cnp_final =cnp_barbati_generat_mai_mic_de_2000 * 10 + cifra_control
+        lista_cnp.append(cnp_final)
 
+        cnp_barbati_generat_mai_mare_de_2000+=0
+        cnp_barbati_generat_mai_mare_de_2000+=5
+        cnp_barbati_generat_mai_mare_de_2000*=100+random.choice(ani_inainte_de_2000)
+        luna_aleasa=random.choice(list(luna.keys()))
+        cnp_barbati_generat_mai_mare_de_2000*=100+random.choice(luna[luna_aleasa])
+        cnp_barbati_generat_mai_mare_de_2000*=100+luna[luna_aleasa]
+        cnp_barbati_generat_mai_mare_de_2000*=100+random.choice(judete_cnp)
+        cnp_barbati_generat_mai_mare_de_2000*=1000+random.choice(nr_secvential)
+        def calculeaza_cifra_control(cnp_barbati_generat_mai_mare_de_2000):
+            constanta = "279146358279"
+            suma = 0
+            cnp_str = str(cnp_barbati_generat_mai_mare_de_2000)
+            for i in range(12):
+                suma += int(cnp_str[i]) * int(constanta[i])
+            
+            rest = suma % 11
+            cifra_control = 1 if rest == 10 else rest
+            
+            return cifra_control
 
+        
+        cifra_control = calculeaza_cifra_control( cnp_barbati_generat_mai_mare_de_2000 )
+        cnp_final =cnp_barbati_generat_mai_mare_de_2000 * 10 + cifra_control
+        lista_cnp.append(cnp_final)
 
-        else:
-            an=random.randint(2000,2025) % 100
-            luna=random.randint(1,12)
-            key = random.randint(0, 11)
-            ziua=luni[key]
-            key2 = random.randint(0,41)
-            judet=judete_cnp[key2]
-            for j in range(0,101):
-                x=j
-                j=100
+    for cnp_femei in range(250001):
+            cnp_femei_generat_mai_mic_de_2000=0
+            cnp_femei_generat_mai_mic_de_2000+=1
+            cnp_femei_generat_mai_mic_de_2000*=100+random.choice(ani_inainte_de_2000)
+            luna_aleasa=random.choice(list(luna.keys()))
+            cnp_femei_generat_mai_mic_de_2000*=100+random.choice(luna[luna_aleasa])
+            cnp_femei_generat_mai_mic_de_2000*=100+luna[luna_aleasa]
+            cnp_femei_generat_mai_mic_de_2000*=100+random.choice(judete_cnp)
+            cnp_femei_generat_mai_mic_de_2000*=1000+random.choice(nr_secvential)
+            def calculeaza_cifra_control(cnp_femei_generat_mai_mic_de_2000):
+                constanta = "279146358279"
+                suma = 0
+                cnp_str = str(cnp_barbati_generat_mai_mic_de_2000)
+                for i in range(12):
+                    suma += int(cnp_str[i]) * int(constanta[i])
+                
+                rest = suma % 11
+                cifra_control = 1 if rest == 10 else rest
+                
+                return cifra_control
 
+            
+            cifra_control = calculeaza_cifra_control( cnp_femei_generat_mai_mic_de_2000 )
+            cnp_final =cnp_femei_generat_mai_mic_de_2000 * 10 + cifra_control
+            lista_cnp.append(cnp_final)
 
-generare_cnp()
-for cnp in lista_cnp[:10]:  # Afișăm primele 10 rezultate
-    print(cnp)
+            cnp_femei_generat_mai_mare_de_2000+=0
+            cnp_femei_generat_mai_mare_de_2000+=5
+            cnp_femei_generat_mai_mare_de_2000*=100+random.choice(ani_inainte_de_2000)
+            luna_aleasa=random.choice(list(luna.keys()))
+            cnp_femei_generat_mai_mare_de_2000*=100+random.choice(luna[luna_aleasa])
+            cnp_femei_generat_mai_mare_de_2000*=100+luna[luna_aleasa]
+            cnp_femei_generat_mai_mare_de_2000*=100+random.choice(judete_cnp)
+            cnp_femei_generat_mai_mare_de_2000*=1000+random.choice(nr_secvential)
+            def calculeaza_cifra_control(cnp_femei_generat_mai_mare_de_2000):
+                constanta = "279146358279"
+                suma = 0
+                cnp_str = str(cnp_femei_generat_mai_mare_de_2000)
+                for i in range(12):
+                    suma += int(cnp_str[i]) * int(constanta[i])
+                
+                rest = suma % 11
+                cifra_control = 1 if rest == 10 else rest
+                
+                return cifra_control
+
+            
+            cifra_control = calculeaza_cifra_control( cnp_femei_generat_mai_mare_de_2000 )
+            cnp_final =cnp_femei_generat_mai_mare_de_2000 * 10 + cifra_control
+            lista_cnp.append(cnp_final)
+def alocare_prenume_nume(lista_cnp):
+     prenume = ['Alexandru', 'Andrei', 'Adrian', 'Bogdan', 'Cristian', 'Daniel', 'Elena', 'Florin', 
+               'Gabriel', 'George', 'Ioan', 'Ioana', 'Maria', 'Mihai', 'Nicolae', 'Paul', 'Radu', 
+               'Stefan', 'Tudor', 'Victor']
+    
+     nume = ['Popescu', 'Ionescu', 'Popa', 'Pop', 'Constantin', 'Stan', 'Dumitrescu', 'Dima',
+            'Gheorghiu', 'Iordache', 'Marin', 'Nistor', 'Oprea', 'Preda', 'Rusu', 'Stanciu',
+            'Toma', 'Ursu', 'Vasile', 'Zamfir']
+     prenume_aleasa=random.choice(prenume)
+     nume_aleasa=random.choice(nume)
+     nume_complet=prenume_aleasa+" "+nume_aleasa
+     global cnp_cu_nume_si_prenume
+     for cnp in lista_cnp:
+         cnp_cu_nume_si_prenume[nume_complet]=lista_cnp[cnp]
+     return cnp_cu_nume_si_prenume
+with open('output.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    for item in my_list:
+        writer.writerow([item])
+
+                
+
+        
+        
+        
+
+        
+        
+        
+    
