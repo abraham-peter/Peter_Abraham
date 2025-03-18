@@ -32,20 +32,24 @@ def statistica_sex():
         varsta_persoana = random.choices(range(65,100),gender_weights,k=1)[0]  #aleg o vârstă random dupa procentajul ales din rangeul definit
         an_persoana = 2023-varsta_persoana   #calculam varsta finala
 
-
-    alegere_sex = random.choices(gender_choices, weights=gender_weights, k=1)[0]
     # Determinam care e
-    if alegere_sex == "Băiat" and alegere_varsta == "Sub 23 ani":
+    if alegere_sex == "Băiat" and alegere_varsta == "0-17":
         cod = 1
         an_final=an_persoana%100
-    elif alegere_sex == "Băiat" and alegere_varsta == "23 ani și peste":
-        cod = 5
-        an_final=an_persoana%100
-    elif alegere_sex == "Fată" and alegere_varsta == "Sub 23 ani":
+    elif alegere_sex == "Fată" and alegere_varsta == "0-17":
         cod = 2
         an_final=an_persoana%100
-    else:  # Femeie 23+ ani
+    elif alegere_sex == "Bărbat" and alegere_varsta == "18-64":
+        cod = 5
+        an_final=an_persoana%100
+    elif alegere_sex == "Femeie" and alegere_varsta == "18-64":
         cod = 6
+        an_final=an_persoana%100
+    elif alegere_sex == "Bărbat" and alegere_varsta == "65+":
+        cod = 7
+        an_final=an_persoana%100
+    elif alegere_sex == "Femeie" and alegere_varsta == "65+":
+        cod = 8
         an_final=an_persoana%100
 
     return cod, an_final
@@ -79,9 +83,15 @@ def generare_cnp():
             luna=random.randint(1,12)
             key = random.randint(0, 11)
             ziua=luni[key]
-            key2 = random.randint(0,41)
+            key2 = random.randint(0,42)
             judet=judete_cnp[key2]
             for j in range(0,101):
                 x=j
                 j=100
 
+def hashing(cnp):
+    for keys,values in 
+
+
+if __name__ == "__main__":
+    statistica_sex()
