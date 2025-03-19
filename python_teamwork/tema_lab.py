@@ -48,10 +48,10 @@ def statistica_sex():
     elif alegere_sex == "Femeie" and alegere_varsta == "18-64" and varsta_speciala==True:
         cod = 6
         an_final=an_persoana%100
-    elif alegere_sex == "Bărbat" and alegere_varsta == "18-64":
+    elif alegere_sex == "Bărbat" and alegere_varsta == "18-64" and varsta_speciala==False:
         cod = 1
         an_final=an_persoana%100
-    elif alegere_sex == "Femeie" and alegere_varsta == "18-64":
+    elif alegere_sex == "Femeie" and alegere_varsta == "18-64" and varsta_speciala==False:
         cod = 2
         an_final=an_persoana%100
     elif alegere_sex == "Bărbat" and alegere_varsta == "65+":
@@ -79,33 +79,47 @@ def calculeaza_cifra_control(cnp_final):
     return cifra_control
 
 def generare_cnp():
-    global lista_cnp
-    cod,an_final=statistica_sex()
-    luna = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
-    judete_cnp = [judete for judete in range(1, 43)]
-    numar_secvential=[i for i in range(0,1000)]
-    statistica_sex()
-    cnp_final=0
-    cnp_final+=cod
-    cnp_final*=100+an_final #cnp_fiinal=cnp_final*100+an_final
-    luna_aleasa=random.choice(list(luna.keys()))
-    zi_aleasa=random.choice(list(range(1,luna[luna_aleasa]+1)))#daca nu pun +1 se duce numai pana la 11 pt ca range mereu se duce numai la n-1
-    cnp_final*=100+luna_aleasa #random.choice=alege un element random din lista|random.randint(a,b)-alege un nr random din intervalul dat
-    cnp_final*=100+zi_aleasa
-
-    judet_aleatoriu=random.choice(judete_cnp)
-    cnp_final*=100+judet_aleatoriu
-    numar_aleatoriu=random.choice(numar_secvential)
-    cnp_final*=1000+numar_aleatoriu
-    cifra_control=calculeaza_cifra_control(cnp_final)
-    cnp_final*=10+cifra_control
-    lista_cnp.append(cnp_final)
-    return cnp_final
+    for i in range(10):
+        global lista_cnp
+        cod,an_final=statistica_sex()#primele 2 variabile preiau valorile returnate de functia statistica_sex
+        luna = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
+        judete_cnp = [judete for judete in range(1, 43)]
+        numar_secvential=[i for i in range(0,1000)]
+        statistica_sex()
+        cnp_final=0
+        cnp_final+=cod
+        cnp_final*=100+an_final #cnp_fiinal=cnp_final*100+an_final
+        luna_aleasa=random.choice(list(luna.keys()))
+        zi_aleasa=random.choice(list(range(1,luna[luna_aleasa]+1)))#daca nu pun +1 se duce numai pana la 11 pt ca range mereu se duce numai la n-1
+        cnp_final*=100+luna_aleasa #random.choice=alege un element random din lista|random.randint(a,b)-alege un nr random din intervalul dat
+        cnp_final*=100+zi_aleasa
+        judet_procentaj=[1.48,1.87,2.81,2.81,2.50,1.26,1.88,2.50,1.45,1.91,1.25,1.30,3.30,3.12,0.96,2.26,2.82,2.31,1.24,1.51,1.41,1.81,1.15,4.40,2.47,2.08,1.08,2.40,2.14,1.77,3.31,1.50,0.97,1.83,2.87,1.53,3.11,0.88,1.80,1.68,1.63,9.72]#procentaj de populatie din judetele din Romania
+        judet_aleatoriu=random.choices(judete_cnp,weights=judet_procentaj,k=1)[0]
+        cnp_final*=100+judet_aleatoriu
+        numar_aleatoriu=random.choice(numar_secvential)
+        cnp_final*=1000+numar_aleatoriu
+        #cifra_control=calculeaza_cifra_control(cnp_final)
+        cifra_control=0
+        cnp_final*=10+cifra_control
+        lista_cnp.append(cnp_final)
+    return lista_cnp
 
     
     
 
 
 if __name__ == "__main__":
-    for i in range(10):
         print(generare_cnp())
+# def hashtable(lista_cnp):
+#     hashtable={i:lista_cnp[i] for i in range(len(lista_cnp))}
+#     for cnp in lista_cnp:
+#         hash_value=cnp%1000
+#         hashtable[hash_value].append(cnp)
+#     return hashtable
+
+# def cautare_cnp(hashtable):
+#     alegere_cnpuri_din_hashatable=[]
+#     for _ in range(1000):
+#      alegere_cnpuri_din_hashatable=random.choice(hashtable.values())
+#     for 
+    
