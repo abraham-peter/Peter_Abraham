@@ -2,6 +2,7 @@
 lista_cnp = []
 cnp_cu_nume_si_prenume = {}
 import random
+from collections import Counter
 
 
 def statistica_sex():
@@ -14,14 +15,14 @@ def statistica_sex():
         gender_choices = ["Băiat", "Fată"]
         gender_weights = [50, 50]  # Distribuție aproximativ egala a sexului
         alegere_sex = random.choices(gender_choices, weights=gender_weights, k=1)[0]#alegem sexul persoanei folosind procentajul de ma sus
-        varsta_persoana = random.choices(range(0,18),gender_weights, k=1)[0]#aleg o vârstă random dupa procentajul ales din rangeul definit
+        varsta_persoana = random.randint(0,17)#aleg o vârstă random dupa procentajul ales din rangeul definit
         an_persoana = 2023-varsta_persoana#calculam varsta finala
     #persoane adulte
     elif alegere_varsta == "18-64":
         gender_choices = ["Bărbat", "Femeie"]
         gender_weights = [46, 54]   # Distribuție aproximativ egala a sexului
         alegere_sex = random.choices(gender_choices, weights=gender_weights, k=1)[0]    #alegem sexul persoanei folosind procentajul de ma sus
-        varsta_persoana = random.choices(range(18,65),gender_weights,k=1)[0]
+        varsta_persoana = random.randint(18,64)#aleg o vârstă random dupa procentajul ales din rangeul definit
         if varsta_persoana>18 and varsta_persoana<24:
             varsta_speciala=True
               
@@ -31,7 +32,7 @@ def statistica_sex():
         gender_choices = ["Bărbat", "Femeie"]
         gender_weights = [40.3,59.6]    # Distribuție aproximativ egala a sexului
         alegere_sex = random.choices(gender_choices, weights=gender_weights, k=1)[0]    #alegem sexul persoanei folosind procentajul de ma sus
-        varsta_persoana = random.choices(range(65,100),gender_weights,k=1)[0]  #aleg o vârstă random dupa procentajul ales din rangeul definit
+        varsta_persoana = random.randint(65,100)#aleg o vârstă random dupa procentajul ales din rangeul definit
         an_persoana = 2023-varsta_persoana   #calculam varsta finala
 
     # Determinam care e
@@ -62,10 +63,10 @@ def statistica_sex():
 
     return cod, an_final
 
-def calculeaza_cifra_control(cnp_temporar):
+def calculeaza_cifra_control(cnp_final):
     constanta = "279146358279"
     suma = 0
-    cnp_temporar = str(cnp_temporar)
+    cnp_temporar = str(cnp_final)
     for i in range(12):
         suma += int(cnp_temporar[i]) * int(constanta[i])
 
@@ -79,9 +80,8 @@ def calculeaza_cifra_control(cnp_temporar):
 
 def generare_cnp():
     global lista_cnp
-    cod=0
-    an_final=0
-    luna = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}#primele valori sunt kei si alea al doilea sunt valori si se acceseaza cu luna[key]
+    cod,an_final=statistica_sex()
+    luna = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
     judete_cnp = [judete for judete in range(1, 43)]
     numar_secvential=[i for i in range(0,1000)]
     statistica_sex()
@@ -92,15 +92,20 @@ def generare_cnp():
     zi_aleasa=random.choice(list(range(1,luna[luna_aleasa]+1)))#daca nu pun +1 se duce numai pana la 11 pt ca range mereu se duce numai la n-1
     cnp_final*=100+luna_aleasa #random.choice=alege un element random din lista|random.randint(a,b)-alege un nr random din intervalul dat
     cnp_final*=100+zi_aleasa
+
     judet_aleatoriu=random.choice(judete_cnp)
     cnp_final*=100+judet_aleatoriu
     numar_aleatoriu=random.choice(numar_secvential)
-    cnp_final*1000=+numar_aleatoriu
+    cnp_final*=1000+numar_aleatoriu
     cifra_control=calculeaza_cifra_control(cnp_final)
+    cnp_final*=10+cifra_control
+    lista_cnp.append(cnp_final)
+    return cnp_final
 
     
     
 
 
 if __name__ == "__main__":
-    statistica_sex()
+    for i in range(10):
+        print(generare_cnp())
