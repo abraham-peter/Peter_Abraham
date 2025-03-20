@@ -89,14 +89,13 @@ def generare_cnp():
         cnp_final=0
         cnp_final+=cod
         print("An ultimele 2 cifre",an_final)
-        cnp_final*=100+an_final #cnp_fiinal=cnp_final*100+an_final
-        
+        cnp_final=cnp_final*100+an_final
         luna_aleasa=random.choice(list(luna.keys()))
        
         zi_aleasa=random.choice(list(range(1,luna[luna_aleasa]+1)))#daca nu pun +1 se duce numai pana la 11 pt ca range mereu se duce numai la n-1
         
-        cnp_final*=100+luna_aleasa #random.choice=alege un element random din lista|random.randint(a,b)-alege un nr random din intervalul dat
-        cnp_final*=100+zi_aleasa
+        cnp_final=cnp_final*100+luna_aleasa #random.choice=alege un element random din lista|random.randint(a,b)-alege un nr random din intervalul dat
+        cnp_final=cnp_final*100+zi_aleasa
         
         judet_procentaj=[1.48,1.87,2.81,2.81,2.50,1.26,1.88,2.50,1.45,1.91,1.25,1.30,3.30,3.12,0.96,2.26,2.82,2.31,1.24,1.51,1.41,1.81,1.15,4.40,2.47,2.08,1.08,2.40,2.14,1.77,3.31,1.50,0.97,1.83,2.87,1.53,3.11,0.88,1.80,1.68,1.63,9.72]#procentaj de populatie din judetele din Romania
 
@@ -104,10 +103,10 @@ def generare_cnp():
         judet_aleatoriu=random.choices(judete_cnp,weights=judet_procentaj,k=1)[0]
         cnp_final=(cnp_final*100)+judet_aleatoriu
         numar_aleatoriu=random.choice(numar_secvential)
-        cnp_final*=1000+numar_aleatoriu
+        cnp_final=cnp_final*1000+numar_aleatoriu
         #cifra_control=calculeaza_cifra_control(cnp_final)
         cifra_control=0
-        cnp_final*=10+cifra_control
+        cnp_final=cnp_final*10+cifra_control
         #lista_cnp.append([cnp_final,len(str(cnp_final))])
         if len(str(cnp_final))==14:
             lista_cnp.append(cnp_final)
@@ -120,5 +119,5 @@ def generare_cnp():
 
 
 if __name__ == "__main__":
-        for i in range(2):
+        for i in range(1000):
             generare_cnp()
