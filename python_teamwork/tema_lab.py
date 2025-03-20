@@ -28,7 +28,7 @@ def statistica_sex():
               
         an_persoana = 2023-varsta_persoana  #calculam varsta finala
     #persoane bătrâne
-    else:
+    elif:
         gender_choices = ["Bărbat", "Femeie"]
         gender_weights = [40.3,59.6]    # Distribuție aproximativ egala a sexului
         alegere_sex = random.choices(gender_choices, weights=gender_weights, k=1)[0]    #alegem sexul persoanei folosind procentajul de ma sus
