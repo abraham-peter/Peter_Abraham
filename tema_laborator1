@@ -161,7 +161,7 @@ def hash_table_pe_judete(lista_cnp, filename="judete_cnp.csv"):
         hash_table_judet = {i: [] for i in range(1,43)}
         for cnp in lista_cnp:
             hash_value_str =str(cnp)
-            hash_value_judet=int(hash_value_str[8:10])
+            hash_value_judet=int(hash_value_str[7:9])
             hash_table_judet[hash_value_judet].append(cnp)
         with open(filename,'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
