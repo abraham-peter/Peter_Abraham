@@ -107,7 +107,7 @@ def generare_cnp():
         an_final=0
         cod,an_final=statistica_sex()#primele 2 variabile preiau valorile returnate de functia statistica_sex
         luna = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
-        judete_cnp = [judete for judete in range(1, 43)]
+        judete_cnp = [judete for judete in range(0, 42)]
         numar_secvential=[i for i in range(0,1000)]
         cnp_final=0
         cnp_final+=cod
@@ -143,13 +143,6 @@ def asociaza_nume_la_cnp(lista_cnp):
     
     return dict_cnp
 
-def write_hash_table_counts_to_csv(hash_table_pe_mod1000, filename="hash_table_counts.csv"):
-    with open(filename, 'w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(['Key', 'Count'])  # Write header
-        for key, values in hash_table_pe_mod1000.items():
-            csv_writer.writerow([key, len(values)])  # Write key and count of values
-
 def afiseaza_cnp_si_nume(dict_cnp, filename="cnp_nume.csv"):
     # Deschidem un fișier CSV pentru scriere
     with open(filename, 'w', newline='') as csvfile:
@@ -164,7 +157,7 @@ def afiseaza_cnp_si_nume(dict_cnp, filename="cnp_nume.csv"):
             
             csv_writer.writerow([cnp, nume, prenume])#scriem in fisier
     
-    print(f"Datele au fost scrise în fișierul {filename}")
+    print(f"Datele au fost scrise in fisierul {filename}")
 
 def hash_table_pe_mod1000_functie(lista_cnp):
       global hash_table_pe_mod1000
@@ -176,38 +169,62 @@ def hash_table_pe_mod1000_functie(lista_cnp):
 
 
 def cautare_hash_table_pe_mod1000(hash_table_pe_mod1000, cnp_random_de_cautat):
-    counter_iteratii_lista=[]
-    for cnp_random in cnp_random_de_cautat:
-        iteratii=0
-        for keys,values in hash_table_pe_mod1000.items():
-            iteratii+=1
-            if cnp_random==values:
-                counter_iteratii_lista.append(iteratii)
-    if counter_iteratii_lista:
-        min_iterations = min(counter_iteratii_lista)
-        max_iterations = max(counter_iteratii_lista)
-        print("Statistici de cautare")
-        print(f"Minimum iterations: {min_iterations}")
-        print(f"Maximum iterations: {max_iterations}")
-    return 
-                
+        counter_iteratii_lista=[]
+        for cnp_random in cnp_random_de_cautat:
+            iteratii=0
+            for keys,values in hash_table_pe_mod1000.items():
+                iteratii+=1
+                for i in range(len(values)):
+                    iteratii+=1
+                    if cnp_random==values[i]:
+                        counter_iteratii_lista.append(iteratii)
+        if counter_iteratii_lista:
+            min_iterations = min(counter_iteratii_lista)
+            max_iterations = max(counter_iteratii_lista)
+            print("Statistici de cautare")
+            print(f"Minimum iterations: {min_iterations}")
+            print(f"Maximum iterations: {max_iterations}")
 
-
+def procentaj_pe_judete(lista_cnp,filename="procentaj_pe_judete.csv"):
+    judete=[]
+    for cnp in lista_cnp:
+        string_judet=str(cnp)[7:9]
+        judete.append(string_judet)
+    counter_valori=Counter(judete)
+    percentaj_judete = {key: format((count / len(lista_cnp)) * 100, '.2f') for key, count in counter_valori.items()}
+    judete_dictyonary = {
+    "00": "Alba", "01": "Arad", "02": "Arges", "03": "Bacau", "04": "Bihor", "05": "Bistrita-Nasaud", 
+    "06": "Botosani", "07": "Braila", "08": "Brasov", "09": "Buzau", "10": "Caras-Severin", 
+    "11": "Cluj", "12": "Constanta", "13": "Covasna", "14": "Dambovita", "15": "Dolj", 
+    "16": "Galati", "17": "Giurgiu", "18": "Gorj", "19": "Harghita", "20": "Hunedoara", 
+    "21": "Ialomita", "22": "Iasi", "23": "Ilfov", "24": "Maramures", "25": "Mehedinti", 
+    "26": "Mures", "27": "Neamt", "28": "Olt", "29": "Prahova", "30": "Salaj", 
+    "31": "Satu Mare", "32": "Sibiu", "33": "Suceava", "34": "Teleorman", "35": "Timis", 
+    "36": "Tulcea", "37": "Valcea", "38": "Vaslui", "39": "Vrancea", "40": "Bucuresti", 
+    "41": "Bucuresti-Ilfov"
+}
+    with open(filename, 'w', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(['Judet', 'Procentaj'])#definim headerul coloanelor
+        for key, value in percentaj_judete.items():
+            csv_writer.writerow([judete_dictyonary[key], value])#scriem in fisier
+        print(f"Datele au fost scrise in fisierul {filename}")
 
 
 if __name__ == "__main__":
     # Etapa 1
-    for i in range(1000):
+    for i in range(100000):
         generare_cnp()
     asociaza_nume_la_cnp(lista_cnp)
     afiseaza_cnp_si_nume(dict_cnp)
-
+    procentaj_pe_judete(lista_cnp)
     # Etapa 2
     hash_table_pe_mod1000_functie(lista_cnp)
-    write_hash_table_counts_to_csv(hash_table_pe_mod1000)  # Write counts to CSV
-
     # Etapa 3
     cnp_random_de_cautat=[]
-    for _ in range(100):
+    for _ in range(1000):
         cnp_random_de_cautat.append(random.choice(lista_cnp))
     cautare_hash_table_pe_mod1000(hash_table_pe_mod1000, cnp_random_de_cautat)
+    
+   
+    

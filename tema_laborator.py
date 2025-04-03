@@ -168,7 +168,7 @@ def afiseaza_cnp_si_nume(dict_cnp, filename="cnp_nume.csv"):
             
             csv_writer.writerow([cnp, nume, prenume])#scriem in fisier
     
-    print(f"Datele au fost scrise în fișierul {filename}")
+    print(f"Datele au fost scrise în fisierul {filename}")
 
 def hash_table_pe_mod1000_functie(lista_cnp):
       global hash_table_pe_mod1000
