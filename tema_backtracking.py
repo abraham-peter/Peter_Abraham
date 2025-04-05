@@ -35,32 +35,32 @@ def dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter
     if litere_mari_counter > 0:
         for char in litere_mari:
             # Creăm o nouă parolă parțială adăugând caracterul la poziția curentă
-            new_password = parola_curenta[:position] + char + parola_curenta[position+1:]
-            rezultat = dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
+            parola_noua = parola_curenta[:position] + char + parola_curenta[position+1:]
+            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
             if rezultat:
                 return rezultat
     
     # Încercăm să punem o literă mică
     if litere_mici_counter > 0:
         for char in litere_mici:
-            new_password = parola_curenta[:position] + char + parola_curenta[position+1:]
-            rezultat = dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
+            parola_noua= parola_curenta[:position] + char + parola_curenta[position+1:]
+            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
             if rezultat:
                 return rezultat
     
     # Încercăm să punem o cifră
     if numere_counter > 0:
         for char in numere:
-            new_password = parola_curenta[:position] + char + parola_curenta[position+1:]
-            rezultat = dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
+            parola_noua= parola_curenta[:position] + char + parola_curenta[position+1:]
+            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
             if rezultat:
                 return rezultat
     
     # Încercăm să punem un caracter special
     if charactere_speciale_counter > 0:
         for char in charactere_speciale:
-            new_password = parola_curenta[:position] + char + parola_curenta[position+1:]
-            rezultat = dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
+            parola_noua = parola_curenta[:position] + char + parola_curenta[position+1:]
+            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
             if rezultat:
                 return rezultat
     
