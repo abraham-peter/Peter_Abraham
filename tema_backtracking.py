@@ -36,7 +36,7 @@ def dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter
         for char in litere_mari:
             # Creăm o nouă parolă parțială adăugând caracterul la poziția curentă
             parola_noua = parola_curenta[:position] + char + parola_curenta[position+1:]
-            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
+            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter-1, litere_mici_counter, numere_counter, charactere_speciale_counter)
             if rezultat:
                 return rezultat
     
@@ -44,7 +44,7 @@ def dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter
     if litere_mici_counter > 0:
         for char in litere_mici:
             parola_noua= parola_curenta[:position] + char + parola_curenta[position+1:]
-            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
+            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter-1, numere_counter, charactere_speciale_counter)
             if rezultat:
                 return rezultat
     
@@ -52,7 +52,7 @@ def dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter
     if numere_counter > 0:
         for char in numere:
             parola_noua= parola_curenta[:position] + char + parola_curenta[position+1:]
-            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
+            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter-1, charactere_speciale_counter)
             if rezultat:
                 return rezultat
     
@@ -60,7 +60,7 @@ def dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter
     if charactere_speciale_counter > 0:
         for char in charactere_speciale:
             parola_noua = parola_curenta[:position] + char + parola_curenta[position+1:]
-            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter)
+            rezultat = dfs(parola_noua,new_remaining, litere_mari_counter, litere_mici_counter, numere_counter, charactere_speciale_counter-1)
             if rezultat:
                 return rezultat
     
