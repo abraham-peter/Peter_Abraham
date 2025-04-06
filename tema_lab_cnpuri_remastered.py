@@ -218,18 +218,16 @@ def procentaj_pe_judete(lista_cnp,filename="procentaj_pe_judete.csv"):
 if __name__ == "__main__":
     # Etapa 1
     generare_cnp()
-    print(len(lista_cnp))
-    print(len(set(lista_cnp)))
     asociaza_nume_la_cnp(lista_cnp)
     afiseaza_cnp_si_nume(dict_cnp)
-    # procentaj_pe_judete(lista_cnp)
-    # # Etapa 2
-    # hash_table_pe_mod1000_functie(lista_cnp)
-    # # Etapa 3
-    # cnp_random_de_cautat=[]
-    # for _ in range(1000):
-    #     cnp_random_de_cautat.append(random.choice(lista_cnp))
-    # cautare_hash_table_pe_mod1000(hash_table_pe_mod1000, cnp_random_de_cautat)
+    procentaj_pe_judete(lista_cnp)
+    # Etapa 2
+    hash_table_pe_mod1000_functie(lista_cnp)
+    # Etapa 3
+    cnp_random_de_cautat=[]
+    for _ in range(1000):
+         cnp_random_de_cautat.append(random.choice(lista_cnp))
+    cautare_hash_table_pe_mod1000(hash_table_pe_mod1000, cnp_random_de_cautat)
     
    
     
