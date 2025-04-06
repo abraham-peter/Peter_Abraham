@@ -99,10 +99,12 @@ def calculeaza_cifra_control(cnp_final):
     return cifra_control
 
 def generare_cnp():
+    set_lista_cnp=set()
+    while set_lista_cnp<1000000:
+        global lista_cnp
         global nume_familie
         global prenume_baieti
         global prenume_fete
-        global lista_cnp
         cod=0
         an_final=0
         cod,an_final=statistica_sex()#primele 2 variabile preiau valorile returnate de functia statistica_sex
@@ -123,8 +125,10 @@ def generare_cnp():
         cnp_final=cnp_final*1000+numar_aleatoriu
         cifra_control=calculeaza_cifra_control(cnp_final)
         cnp_final=cnp_final*10+cifra_control
-        lista_cnp.append(cnp_final)
-        return lista_cnp
+        set_lista_cnp.add(cnp_final)
+        lista_cnp=list(set_lista_cnp)
+        
+    return lista_cnp
 def asociaza_nume_la_cnp(lista_cnp):
     global dict_cnp
     for cnp in lista_cnp: #iau cnpurile din lista
@@ -213,18 +217,19 @@ def procentaj_pe_judete(lista_cnp,filename="procentaj_pe_judete.csv"):
 
 if __name__ == "__main__":
     # Etapa 1
-    for i in range(100000):
-        generare_cnp()
+    generare_cnp()
+    print(len(lista_cnp))
+    print(len(set(lista_cnp)))
     asociaza_nume_la_cnp(lista_cnp)
     afiseaza_cnp_si_nume(dict_cnp)
-    procentaj_pe_judete(lista_cnp)
-    # Etapa 2
-    hash_table_pe_mod1000_functie(lista_cnp)
-    # Etapa 3
-    cnp_random_de_cautat=[]
-    for _ in range(1000):
-        cnp_random_de_cautat.append(random.choice(lista_cnp))
-    cautare_hash_table_pe_mod1000(hash_table_pe_mod1000, cnp_random_de_cautat)
+    # procentaj_pe_judete(lista_cnp)
+    # # Etapa 2
+    # hash_table_pe_mod1000_functie(lista_cnp)
+    # # Etapa 3
+    # cnp_random_de_cautat=[]
+    # for _ in range(1000):
+    #     cnp_random_de_cautat.append(random.choice(lista_cnp))
+    # cautare_hash_table_pe_mod1000(hash_table_pe_mod1000, cnp_random_de_cautat)
     
    
     
