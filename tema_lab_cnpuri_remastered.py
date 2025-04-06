@@ -100,7 +100,7 @@ def calculeaza_cifra_control(cnp_final):
 
 def generare_cnp():
     set_lista_cnp=set()
-    while set_lista_cnp<1000000:
+    while len(set_lista_cnp)<1000000:
         global lista_cnp
         global nume_familie
         global prenume_baieti
@@ -126,7 +126,7 @@ def generare_cnp():
         cifra_control=calculeaza_cifra_control(cnp_final)
         cnp_final=cnp_final*10+cifra_control
         set_lista_cnp.add(cnp_final)
-        lista_cnp=list(set_lista_cnp)
+    lista_cnp=list(set_lista_cnp)
         
     return lista_cnp
 def asociaza_nume_la_cnp(lista_cnp):
