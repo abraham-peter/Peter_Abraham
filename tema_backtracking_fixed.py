@@ -67,7 +67,7 @@ def dfs(parola_curenta, pozitii_ramase, litere_mari_counter, litere_mici_counter
     return None
 
 
-    # Inițializăm o parolă "goală" de 6 caractere și o listă cu pozițiile disponibile
+# Inițializăm o parolă "goală" de 6 caractere și o listă cu pozițiile disponibile
 parola_goala = " " * 6  # folosim un caracter placeholder
 positions = list(range(6))
 
